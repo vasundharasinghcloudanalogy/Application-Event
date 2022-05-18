@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>When_Case_Priority_Is_High_1</name>
+        <label>When Case Priority Is High</label>
+        <locationX>568</locationX>
+        <locationY>41</locationY>
+        <actionName>Case.Send_Email_Alert_to_customer</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>When_Case_Priority_is_Medium</name>
+        <label>When Case Priority is Medium</label>
+        <locationX>585</locationX>
+        <locationY>240</locationY>
+        <actionName>Case.Send_Email_Case_When_Case_Priority_is_Medium</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>Check_Case_Priority</name>
+        <label>Check Case Priority</label>
+        <locationX>437</locationX>
+        <locationY>152</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>When_Case_Priority_is_High</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ECM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>When_Case_Priority_Is_High_1</targetReference>
+            </connector>
+            <label>When Case Priority is High</label>
+        </rules>
+        <rules>
+            <name>When_Case_Priority_is_Medium1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Medium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ECM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>When_Case_Priority_is_Medium</targetReference>
+            </connector>
+            <label>When Case Priority is Medium</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Send Email to Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Email to Case</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>22</locationX>
+        <locationY>44</locationY>
+        <connector>
+            <targetReference>Check_Case_Priority</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>
