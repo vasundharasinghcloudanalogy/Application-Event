@@ -1,0 +1,14 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="childMessage" type="String"/>
+    
+    <!--Reminder Points::-> Don't need the name attribute in handler in Application Event ...-->
+    <aura:handler event="c:NewEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler event="c:ClearMessage" action="{!c.clearMessage}"/>
+    
+     <lightning:card  title="Parent Component">
+        <p class="slds-m-left_large">{!v.childMessage}</p>
+         <!--Reminder Points ::-> Need to include the publicher component in Handler component as down..-->
+         <!--<c:ChildComponent/>--> 
+    </lightning:card>
+    
+</aura:component>

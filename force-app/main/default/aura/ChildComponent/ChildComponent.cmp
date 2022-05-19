@@ -1,0 +1,11 @@
+<aura:component  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <!-- Register Custom Event -->
+    <aura:registerEvent name="cmpEvent" type="c:NewEvent"/>
+    <aura:registerEvent name="clearMessageEvent" type="c:ClearMessage"/>
+    
+     <lightning:card  title="Child Component">
+         <lightning:button class ="slds-m-left_medium" variant="brand" label="Fire Event" title="Event Fire" onclick="{! c.fireEvent}" />
+         <lightning:button class ="slds-m-left_medium" variant="brand" label="Cleare Message" title="Cleare Parent Message" onclick="{!c.clearParentMessage}" />
+    </lightning:card>
+</aura:component>
